@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.ValueMap;
 
-public class DriveSystem{
+public class DriveSystem extends RobotSystem {
 
     //Variables connecting to the physical robot.
     private Joystick joystick;
@@ -26,7 +26,7 @@ public class DriveSystem{
     private boolean editingSpeed;
     private int lastSensUpdate;
 
-    public DriveSystem(){
+    public void init(){
         joystick = new Joystick(ValueMap.JOYSTICK_PORT);
         leftMotor = new VictorSP(ValueMap.LEFT_MOTOR_PORT);
         rightMotor = new VictorSP(ValueMap.RIGHT_MOTOR_PORT);
@@ -39,7 +39,9 @@ public class DriveSystem{
         editingSpeed = true;
     }
 
-    public void update(){
+    public void updateAutonomous(){}
+
+    public void updateTeleop(){
         int joystickPOV = joystick.getPOV();
         if(joystickPOV > -1 && lastSensUpdate++ >= 5){
             lastSensUpdate = 0;

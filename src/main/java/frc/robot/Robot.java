@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.systems.DriveSystem;
 import frc.robot.systems.RobotSystem;
@@ -22,12 +20,10 @@ import frc.robot.systems.RobotSystem;
  */
 public class Robot extends TimedRobot {
 
-  private DriveSystem driveSystem;
-
   //Runs when the robot is first started up.
   @Override
   public void robotInit() {
-    driveSystem = new DriveSystem();
+    RobotSystem.registerSystem("drive", new DriveSystem());
   }
 
   //Runs periodically, in any mode.
@@ -43,12 +39,15 @@ public class Robot extends TimedRobot {
   //Runs periodically during autonomous.
   @Override
   public void autonomousPeriodic() {
+    for(RobotSystem system : RobotSystem.allSystems())
+      system.updateAutonomous();
   }
 
   //Runs periodically during tele-op.
   @Override
   public void teleopPeriodic() {
-    driveSystem.update();
+    for(RobotSystem system : RobotSystem.allSystems())
+      system.updateTeleop();
   }
 
   //Runs periodically during test.
