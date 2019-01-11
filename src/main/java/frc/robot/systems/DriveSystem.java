@@ -19,6 +19,8 @@ public class DriveSystem{
     private int lastReversedUpdate;
 
     //Variables controlling the sensitivity of the joystick.
+    private double speed;
+    private double rotation;
     private double speedSensitivity;
     private double rotationSensitivity;
     private boolean editingSpeed;
@@ -32,6 +34,7 @@ public class DriveSystem{
         drive = new DifferentialDrive(leftMotor, rightMotor);
         reversedFront = false;
 
+        speed = rotation = 0D;
         speedSensitivity = rotationSensitivity = 1D;
         editingSpeed = true;
     }
@@ -52,10 +55,20 @@ public class DriveSystem{
         SmartDashboard.putNumber("rotSens", rotationSensitivity);
         SmartDashboard.putBoolean("reversedFront", reversedFront);
 
-        double speed = joystick.getRawAxis(1) * speedSensitivity;
+        double targetSpeed = joystick.getRawAxis(1) * speedSensitivity;
+        if(targetSpeed > speed)
+            speed += 0.1;
+        else if(targetSpeed < speed)
+            speed = targetSpeed;
+
         if(reversedFront)
             speed *= -1;
-        double rotation = joystick.getRawAxis(0) * rotationSensitivity;
+        rotation = joystick.getRawAxis(0) * rotationSensitivity;
+        
+        drive(speed, rotation);
+    }
+
+    public void drive(double speed, double rotation){
         drive.arcadeDrive(speed, rotation);
     }
 
