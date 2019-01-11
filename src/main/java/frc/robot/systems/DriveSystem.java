@@ -16,7 +16,6 @@ public class DriveSystem extends RobotSystem {
     //Abstraction for the driving system.
     private DifferentialDrive drive;
     private boolean reversedFront;
-    private int lastReversedUpdate;
 
     //Variables controlling the sensitivity of the joystick.
     private double speed;
@@ -48,10 +47,8 @@ public class DriveSystem extends RobotSystem {
             updateSensitivity(joystickPOV);
         }
 
-        if(joystick.getRawButton(3) && lastReversedUpdate++ >= 5){
-            lastReversedUpdate = 0;
+        if(joystick.getRawButtonPressed(ValueMap.REVERSE_Y_BUTTON))
             reversedFront = !reversedFront;
-        }
 
         SmartDashboard.putNumber("speedSens", speedSensitivity);
         SmartDashboard.putNumber("rotSens", rotationSensitivity);
