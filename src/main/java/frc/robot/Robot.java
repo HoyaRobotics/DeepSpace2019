@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.systems.DriveSystem;
 import frc.robot.systems.RobotSystem;
 
@@ -26,9 +27,12 @@ public class Robot extends TimedRobot {
     RobotSystem.registerSystem("drive", new DriveSystem());
   }
 
+  private long lastPeriodic = System.currentTimeMillis();
   //Runs periodically, in any mode.
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("bchmk_packetperiod", System.currentTimeMillis() - lastPeriodic);
+    lastPeriodic = System.currentTimeMillis();
   }
 
   //Runs when autonomous is started.
@@ -39,15 +43,23 @@ public class Robot extends TimedRobot {
   //Runs periodically during autonomous.
   @Override
   public void autonomousPeriodic() {
+    long startTime = System.currentTimeMillis();
+    
     for(RobotSystem system : RobotSystem.allSystems())
       system.updateAutonomous();
+
+    SmartDashboard.putNumber("bchmk_auto", System.currentTimeMillis() - startTime);
   }
 
   //Runs periodically during tele-op.
   @Override
   public void teleopPeriodic() {
+    long startTime = System.currentTimeMillis();
+
     for(RobotSystem system : RobotSystem.allSystems())
       system.updateTeleop();
+
+    SmartDashboard.putNumber("bchmk_teleop", (System.currentTimeMillis() - startTime));
   }
 
   //Runs periodically during test.
