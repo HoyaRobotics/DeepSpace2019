@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.ValueMap;
 
 public class DriveSystem extends RobotSystem {
+    
+    //Acceleration increment.
+    private static final double ACCEL_INC = 0.05;
 
     //Variables connecting to the physical robot.
     private Joystick joystick;
@@ -22,6 +25,7 @@ public class DriveSystem extends RobotSystem {
     private double rotation;
     private double speedSensitivity;
     private double rotationSensitivity;
+    private double acceleration = 0;
     private boolean editingSpeed;
     private int lastSensUpdate;
 
@@ -50,20 +54,18 @@ public class DriveSystem extends RobotSystem {
         if(joystick.getRawButtonPressed(ValueMap.REVERSE_Y_BUTTON))
             reversedFront = !reversedFront;
 
-        SmartDashboard.putNumber("speedSens", speedSensitivity);
-        SmartDashboard.putNumber("rotSens", rotationSensitivity);
-        SmartDashboard.putBoolean("reversedFront", reversedFront);
-
-        double targetSpeed = joystick.getRawAxis(1) * speedSensitivity;
-        if(targetSpeed > speed)
-            speed += 0.1;
-        else if(targetSpeed < speed)
-            speed = targetSpeed;
+        smoothAcceleration(joystick.getRawAxis(1) * speedSensitivity);
 
         if(reversedFront)
             speed *= -1;
         rotation = joystick.getRawAxis(0) * rotationSensitivity;
-        
+
+        SmartDashboard.putNumber("speed", speed);
+        SmartDashboard.putNumber("rotation", rotation);
+        SmartDashboard.putNumber("speedSens", speedSensitivity);
+        SmartDashboard.putNumber("rotSens", rotationSensitivity);
+        SmartDashboard.putBoolean("reversedFront", reversedFront);
+
         drive(speed, rotation);
     }
 
@@ -98,5 +100,28 @@ public class DriveSystem extends RobotSystem {
             editingSpeed = true;
         else if(joystickPOV == 90)
             editingSpeed = false;
+    }
+
+    private void smoothAcceleration(double targetSpeed){
+        if(speed == targetSpeed)
+            return;
+
+        if(speed < targetSpeed){
+            acceleration += ACCEL_INC;
+            speed += acceleration;
+
+            if(speed >= targetSpeed){
+                speed = targetSpeed;
+                acceleration = 0;
+            }
+        }else{
+            acceleration += ACCEL_INC;
+            speed -= acceleration;
+
+            if(speed <= targetSpeed){
+                speed = targetSpeed;
+                acceleration = 0;
+            }
+        }
     }
 }
