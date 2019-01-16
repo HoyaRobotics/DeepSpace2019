@@ -1,23 +1,28 @@
 package frc.robot.systems;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.ValueMap;
 
 public class DriveSystem extends RobotSystem {
-    
+
     //Acceleration increment.
     private static final double ACCEL_INC = 0.05;
 
     //Variables connecting to the physical robot.
     private Joystick joystick;
-    private VictorSP leftMotor;
-    private VictorSP rightMotor;
+    private VictorSP frontLeftMotor;
+    private VictorSP frontRightMotor;
+    private VictorSP rearLeftMotor;
+    private VictorSP rearRightMotor;
 
     //Abstraction for the driving system.
     private DifferentialDrive drive;
+    private SpeedControllerGroup leftMotors;
+    private SpeedControllerGroup rightMotors;
     private boolean reversedFront;
 
     //Variables controlling the sensitivity of the joystick.
@@ -31,10 +36,14 @@ public class DriveSystem extends RobotSystem {
 
     public void init(){
         joystick = new Joystick(ValueMap.JOYSTICK_PORT);
-        leftMotor = new VictorSP(ValueMap.LEFT_MOTOR_PORT);
-        rightMotor = new VictorSP(ValueMap.RIGHT_MOTOR_PORT);
+        frontLeftMotor = new VictorSP(ValueMap.FRONT_LEFT_MOTOR_PORT);
+        frontRightMotor = new VictorSP(ValueMap.FRONT_RIGHT_MOTOR_PORT);
+        rearLeftMotor = new VictorSP(ValueMap.REAR_LEFT_MOTOR_PORT);
+        rearRightMotor = new VictorSP(ValueMap.REAR_RIGHT_MOTOR_PORT);
 
-        drive = new DifferentialDrive(leftMotor, rightMotor);
+        leftMotors = new SpeedControllerGroup(frontLeftMotor, rearLeftMotor);
+        rightMotors = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
+        drive = new DifferentialDrive(leftMotors, rightMotors);
         reversedFront = false;
 
         speed = rotation = 0D;
