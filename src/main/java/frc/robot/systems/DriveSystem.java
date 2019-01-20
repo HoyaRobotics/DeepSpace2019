@@ -1,33 +1,26 @@
 package frc.robot.systems;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.ValueMap;
 
 public class DriveSystem extends RobotSystem {
 
-    //Acceleration increment.
+    //Driving constants.
     private static final double ACCEL_INC = 0.05;
+    private static final double DEAD_BAND = 0.15;
 
-    //Variables connecting to the physical robot.
+    //Variables relating to robot control.
     private Joystick joystick;
     private VictorSP frontLeftMotor;
     private VictorSP frontRightMotor;
     private VictorSP rearLeftMotor;
     private VictorSP rearRightMotor;
-
-    //Abstraction for the driving system.
-    private DifferentialDrive drive;
-    private SpeedControllerGroup leftMotors;
-    private SpeedControllerGroup rightMotors;
     private boolean reversedFront;
 
     //Variables controlling the sensitivity of the joystick.
-    private double speed;
-    private double rotation;
+    private double lastSpeed;
     private double speedSensitivity;
     private double rotationSensitivity;
     private double acceleration = 0;
@@ -40,13 +33,9 @@ public class DriveSystem extends RobotSystem {
         frontRightMotor = new VictorSP(ValueMap.FRONT_RIGHT_MOTOR_PORT);
         rearLeftMotor = new VictorSP(ValueMap.REAR_LEFT_MOTOR_PORT);
         rearRightMotor = new VictorSP(ValueMap.REAR_RIGHT_MOTOR_PORT);
-
-        leftMotors = new SpeedControllerGroup(frontLeftMotor, rearLeftMotor);
-        rightMotors = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
-        drive = new DifferentialDrive(leftMotors, rightMotors);
         reversedFront = false;
 
-        speed = rotation = 0D;
+        lastSpeed = 0;
         speedSensitivity = rotationSensitivity = 1D;
         editingSpeed = true;
     }
@@ -55,19 +44,13 @@ public class DriveSystem extends RobotSystem {
 
     public void updateTeleop(){
         int joystickPOV = joystick.getPOV();
-        if(joystickPOV > -1 && lastSensUpdate++ >= 5){
-            lastSensUpdate = 0;
+        if(joystickPOV > -1 && lastSensUpdate++ >= 5)
             updateSensitivity(joystickPOV);
-        }
-
         if(joystick.getRawButtonPressed(ValueMap.REVERSE_Y_BUTTON))
             reversedFront = !reversedFront;
 
-        smoothAcceleration(joystick.getRawAxis(1) * speedSensitivity);
-
-        if(reversedFront)
-            speed *= -1;
-        rotation = joystick.getRawAxis(0) * rotationSensitivity;
+        double speed = smoothAcceleration(joystick.getRawAxis(1) * speedSensitivity);
+        double rotation = joystick.getRawAxis(0) * rotationSensitivity;
 
         SmartDashboard.putNumber("speed", speed);
         SmartDashboard.putNumber("rotation", rotation);
@@ -79,10 +62,26 @@ public class DriveSystem extends RobotSystem {
     }
 
     public void drive(double speed, double rotation){
-        drive.arcadeDrive(speed, rotation);
+        speed = applyDeadband(speed);
+        rotation = applyDeadband(rotation);
+
+        double leftSide = limit((speed * -1) + rotation);
+        double rightSide = limit(speed + rotation);
+
+        if(reversedFront){
+            leftSide *= -1;
+            rightSide *= -1;
+        }
+
+        frontLeftMotor.set(leftSide);
+        rearLeftMotor.set(leftSide);
+        frontRightMotor.set(rightSide);
+        rearRightMotor.set(rightSide);
     }
 
     private void updateSensitivity(int joystickPOV){
+        lastSensUpdate = 0;
+
         if(joystickPOV == 0){
             if(editingSpeed)
                 speedSensitivity *= 1.1;
@@ -111,9 +110,11 @@ public class DriveSystem extends RobotSystem {
             editingSpeed = false;
     }
 
-    private void smoothAcceleration(double targetSpeed){
+    private double smoothAcceleration(double targetSpeed){
+        double speed = lastSpeed;
+
         if(speed == targetSpeed)
-            return;
+            return lastSpeed;
 
         if(speed < targetSpeed){
             acceleration += ACCEL_INC;
@@ -132,5 +133,24 @@ public class DriveSystem extends RobotSystem {
                 acceleration = 0;
             }
         }
+
+        lastSpeed = speed;
+        return speed;
+    }
+
+    private double applyDeadband(double value){
+        if(Math.abs(value) < DEAD_BAND)
+            return 0.0;
+        else
+            return value;
+    }
+
+    private double limit(double value){
+        if(value > 1.0)
+            return 1.0;
+        else if(value < -1.0)
+            return -1.0;
+        else
+            return value;
     }
 }
