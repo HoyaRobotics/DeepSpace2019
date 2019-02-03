@@ -7,9 +7,9 @@ public class ValueMap{
     public static final int JOYSTICK_PORT = 0;
     public static final int REVERSE_Y_BUTTON = 4;
 
-    public static final int FRONT_LEFT_MOTOR_PORT = 0;
-    public static final int FRONT_RIGHT_MOTOR_PORT = 5;
-    public static final int REAR_LEFT_MOTOR_PORT = 1;
-    public static final int REAR_RIGHT_MOTOR_PORT = 4;
+    public static final int FRONT_LEFT_MOTOR_PORT = 3;
+    public static final int FRONT_RIGHT_MOTOR_PORT = 4;
+    public static final int REAR_LEFT_MOTOR_PORT = 2;
+    public static final int REAR_RIGHT_MOTOR_PORT = 1;
 
 }
