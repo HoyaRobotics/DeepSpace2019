@@ -7,10 +7,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.systems.DriveSystem;
+import frc.robot.systems.HatchSystem;
 import frc.robot.systems.RobotSystem;
+import frc.robot.util.ValueMap;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,6 +28,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     RobotSystem.registerSystem("drive", new DriveSystem());
+    RobotSystem.registerSystem("hatch", new HatchSystem());
+
+    Compressor compressor = new Compressor(ValueMap.COMPRESSOR_PORT);
+    compressor.start();
+    compressor.setClosedLoopControl(true);
   }
 
   private long lastPeriodic = System.currentTimeMillis();
