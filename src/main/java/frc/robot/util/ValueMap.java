@@ -6,6 +6,7 @@ public class ValueMap{
 
     //Driver input.
     public static final int JOYSTICK_PORT = 0;
+    public static final int SHOOT_CARGO_BUTTON = 1;
     public static final int TOGGLE_HATCH_MANIP_BUTTON = 2;
     public static final int TOGGLE_HATCH_LIFTER_BUTTON = 6;
     public static final int REVERSE_Y_BUTTON = 4;
@@ -15,6 +16,8 @@ public class ValueMap{
     public static final int FRONT_RIGHT_MOTOR_PORT = 4;
     public static final int REAR_LEFT_MOTOR_PORT = 2;
     public static final int REAR_RIGHT_MOTOR_PORT = 1;
+    public static final int CARGO_LEFT_SHOOTER = 17;
+    public static final int CARGO_RIGHT_SHOOTER = 16;
 
     //Pneumatics.
     public static final int COMPRESSOR_PORT = 0;

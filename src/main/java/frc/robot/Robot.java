@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.systems.CargoSystem;
 import frc.robot.systems.DriveSystem;
 import frc.robot.systems.HatchSystem;
 import frc.robot.systems.RobotSystem;
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     RobotSystem.registerSystem("drive", new DriveSystem());
     RobotSystem.registerSystem("hatch", new HatchSystem());
+    RobotSystem.registerSystem("cargo", new CargoSystem());
 
     Compressor compressor = new Compressor(ValueMap.COMPRESSOR_PORT);
     compressor.start();
