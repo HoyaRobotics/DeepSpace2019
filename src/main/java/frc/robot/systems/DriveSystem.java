@@ -58,6 +58,8 @@ public class DriveSystem extends RobotSystem {
 
         if(joystick.getRawButtonPressed(ValueMap.TOGGLE_ROTATION_DAMPENING))
             dampenRotation = !dampenRotation;
+        if(joystick.getRawButtonPressed(ValueMap.REVERSE_Y))
+            reversedFront = !reversedFront;
 
         //Calculate robot's speed and rotation based on joystick and mods.
         double speed = joystick.getRawAxis(ValueMap.DRIVE_FRONT_BACK);
