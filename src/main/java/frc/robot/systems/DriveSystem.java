@@ -1,6 +1,5 @@
 package frc.robot.systems;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Input;
@@ -33,9 +32,7 @@ public class DriveSystem extends RobotSystem {
         dampenRotation = true;
     }
 
-    public void updateAutonomous(){}
-
-    public void updateTeleop(){
+    public void update(){
         /*un-comment when elevator sensors are installed:
         double speedMod = 1.0 - (currentElevatorHeight / maxElevatorHeight);
         if(speedMod < someMinSpeed)

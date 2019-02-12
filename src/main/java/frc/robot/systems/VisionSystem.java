@@ -8,8 +8,6 @@ public class VisionSystem extends RobotSystem {
         CameraServer.getInstance().startAutomaticCapture(0);
     }
 
-    public void updateAutonomous(){}
-
-    public void updateTeleop(){}
+    public void update(){}
 
 }

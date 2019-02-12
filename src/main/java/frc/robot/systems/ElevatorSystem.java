@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Input;
 import frc.robot.util.ValueMap;
@@ -24,9 +23,7 @@ public class ElevatorSystem extends RobotSystem{
         elevator.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TIMEOUT);
     }
 
-    public void updateAutonomous(){}
-
-    public void updateTeleop(){
+    public void update(){
         if(Input.getRawButtonPressed(ValueMap.ZERO_ENCODER))
             zeroEncoder();
         

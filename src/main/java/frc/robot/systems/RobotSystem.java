@@ -16,10 +16,8 @@ public abstract class RobotSystem {
     //Should essentially replace constructor in child classes.
     //Put all initialization code here.
     public abstract void init();
-    //Called during autonomous mode.
-    public abstract void updateAutonomous();
-    //Called during tele-op mode.
-    public abstract void updateTeleop();
+    //Called every robot packet.
+    public abstract void update();
 
     //Adds a system to the global list.
     public static void registerSystem(String name, RobotSystem system){

@@ -1,6 +1,5 @@
 package frc.robot.systems;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Input;
@@ -16,9 +15,7 @@ public class HatchSystem extends RobotSystem{
         hatchLifter = new Solenoid(ValueMap.HATCH_LIFTER_PORT);
     }
 
-    public void updateAutonomous(){}
-
-    public void updateTeleop(){
+    public void update(){
         if(Input.getRawButtonPressed(ValueMap.TOGGLE_HATCH_MANIPULATOR))
             toggleManipulator();
         if(Input.getRawButtonPressed(ValueMap.TOGGLE_HATCH_LIFTER)) 
