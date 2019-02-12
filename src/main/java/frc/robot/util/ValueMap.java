@@ -4,20 +4,36 @@ package frc.robot.util;
 //etc into variable names.
 public class ValueMap{
 
-    //Driver input.
+    //Joystick port.
     public static final int JOYSTICK_PORT = 0;
-    public static final int SHOOT_CARGO_BUTTON = 1;
-    public static final int TOGGLE_HATCH_MANIP_BUTTON = 2;
-    public static final int TOGGLE_HATCH_LIFTER_BUTTON = 6;
-    public static final int REVERSE_Y_BUTTON = 4;
 
-    //Motors.
+    //Joystick buttons.
+    public static final int ZERO_ENCODER = 1;              //A
+    public static final int TOGGLE_HATCH_MANIPULATOR = 2;  //B
+    public static final int TOGGLE_ROTATION_DAMPENING = 3; //X
+    public static final int REVERSE_Y = 4;                 //Y
+    public static final int CARGO_INTAKE_IN = 5;           //Left Bumper
+    public static final int TOGGLE_HATCH_LIFTER = 6;       //Right Bumper
+
+    //Joystick axis.
+    public static final int DRIVE_LEFT_RIGHT = 0;          //Left Joystick X
+    public static final int DRIVE_FRONT_BACK = 1;          //Left Joystick Y
+    public static final int CARGO_INTAKE_OUT = 2;          //Left Trigger
+
+    //Joystick POV.
+    public static final int RAISE_ELEVATOR = 0;
+
+    //PWM ports.
     public static final int FRONT_LEFT_MOTOR_PORT = 3;
     public static final int FRONT_RIGHT_MOTOR_PORT = 4;
     public static final int REAR_LEFT_MOTOR_PORT = 2;
     public static final int REAR_RIGHT_MOTOR_PORT = 1;
+    public static final int CARGO_INTAKE_RIGHT = 0;
+
+    //CAN bus ids.
     public static final int CARGO_LEFT_SHOOTER = 17;
     public static final int CARGO_RIGHT_SHOOTER = 16;
+    public static final int ELEVATOR = 15;
 
     //Pneumatics.
     public static final int COMPRESSOR_PORT = 0;

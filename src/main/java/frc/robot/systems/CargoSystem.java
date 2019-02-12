@@ -24,7 +24,7 @@ public class CargoSystem extends RobotSystem{
     public void updateAutonomous(){}
 
     public void updateTeleop(){
-        if(joystick.getRawButton(ValueMap.SHOOT_CARGO_BUTTON)){
+        if(joystick.getRawButton(ValueMap.CARGO_INTAKE_OUT)){
             leftShooter.set(ControlMode.PercentOutput, MAX_SPEED);
             rightShooter.set(ControlMode.PercentOutput, -MAX_SPEED);
         }else{

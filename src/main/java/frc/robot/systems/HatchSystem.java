@@ -20,9 +20,9 @@ public class HatchSystem extends RobotSystem{
     public void updateAutonomous(){}
 
     public void updateTeleop(){
-        if(joystick.getRawButtonPressed(ValueMap.TOGGLE_HATCH_MANIP_BUTTON))
+        if(joystick.getRawButtonPressed(ValueMap.TOGGLE_HATCH_MANIPULATOR))
             toggleManipulator();
-        if(joystick.getRawButtonPressed(ValueMap.TOGGLE_HATCH_LIFTER_BUTTON)) 
+        if(joystick.getRawButtonPressed(ValueMap.TOGGLE_HATCH_LIFTER)) 
             toggleLift();
 
         SmartDashboard.putBoolean("hatchManipStatus", hatchManipulator.get());

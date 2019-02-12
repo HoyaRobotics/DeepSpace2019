@@ -56,16 +56,17 @@ public class DriveSystem extends RobotSystem {
         ex: speed *= PoewrLookup.lookup(speedMod);
         */
 
-        if(joystick.getRawButtonPressed(3))
+        if(joystick.getRawButtonPressed(ValueMap.TOGGLE_ROTATION_DAMPENING))
             dampenRotation = !dampenRotation;
 
         //Calculate robot's speed and rotation based on joystick and mods.
-        double speed = joystick.getRawAxis(1);
+        double speed = joystick.getRawAxis(ValueMap.DRIVE_FRONT_BACK);
         double rotation;
         if(dampenRotation)
-            rotation = Dampen.lookup(Math.abs(joystick.getRawAxis(0))) * (joystick.getRawAxis(0) < 0 ? -1 : 1);
+            rotation = Dampen.lookup(Math.abs(joystick.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT))) 
+                * (joystick.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT) < 0 ? -1 : 1);
         else
-            rotation = joystick.getRawAxis(0);
+            rotation = joystick.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT);
 
         //Print certain values to SmartDashboard for diagnostics.
         SmartDashboard.putNumber("speed", speed);

@@ -28,10 +28,10 @@ public class ElevatorSystem extends RobotSystem{
     public void updateAutonomous(){}
 
     public void updateTeleop(){
-        if(joystick.getRawButtonPressed(1))
+        if(joystick.getRawButtonPressed(ValueMap.ZERO_ENCODER))
             zeroEncoder();
         
-        if(joystick.getPOV() == 0)
+        if(joystick.getPOV() == ValueMap.RAISE_ELEVATOR)
             elevator.set(ControlMode.PercentOutput, 0.5);
 
         int position = elevator.getSensorCollection().getPulseWidthPosition();
