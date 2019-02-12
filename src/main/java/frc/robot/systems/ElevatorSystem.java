@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.util.Input;
 import frc.robot.util.ValueMap;
 
 public class ElevatorSystem extends RobotSystem{
@@ -13,12 +14,10 @@ public class ElevatorSystem extends RobotSystem{
     private static final int TIMEOUT = 30;
 
     private TalonSRX elevator;
-    private Joystick joystick;
     private int encoderOffset;
 
     public void init(){
         elevator = new TalonSRX(ValueMap.ELEVATOR);
-        joystick = new Joystick(ValueMap.JOYSTICK_PORT);
 
         elevator.configFactoryDefault();
         zeroEncoder();
@@ -28,10 +27,10 @@ public class ElevatorSystem extends RobotSystem{
     public void updateAutonomous(){}
 
     public void updateTeleop(){
-        if(joystick.getRawButtonPressed(ValueMap.ZERO_ENCODER))
+        if(Input.getRawButtonPressed(ValueMap.ZERO_ENCODER))
             zeroEncoder();
         
-        if(joystick.getPOV() == ValueMap.RAISE_ELEVATOR)
+        if(Input.getPOV() == ValueMap.RAISE_ELEVATOR)
             elevator.set(ControlMode.PercentOutput, 0.5);
 
         int position = elevator.getSensorCollection().getPulseWidthPosition();

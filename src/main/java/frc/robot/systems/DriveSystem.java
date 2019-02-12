@@ -3,6 +3,7 @@ package frc.robot.systems;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.util.Input;
 import frc.robot.util.ValueMap;
 import frc.robot.util.math.Dampen;
 
@@ -13,7 +14,6 @@ public class DriveSystem extends RobotSystem {
     private static final double DEAD_BAND = 0.15;
 
     //Variables relating to robot control.
-    private Joystick joystick;
     private VictorSP frontLeftMotor;
     private VictorSP frontRightMotor;
     private VictorSP rearLeftMotor;
@@ -23,7 +23,6 @@ public class DriveSystem extends RobotSystem {
 
     public void init(){
         //Create joystick and motor objects with values obtained from ValueMap class.
-        joystick = new Joystick(ValueMap.JOYSTICK_PORT);
         frontLeftMotor = new VictorSP(ValueMap.FRONT_LEFT_MOTOR_PORT);
         frontRightMotor = new VictorSP(ValueMap.FRONT_RIGHT_MOTOR_PORT);
         rearLeftMotor = new VictorSP(ValueMap.REAR_LEFT_MOTOR_PORT);
@@ -56,19 +55,19 @@ public class DriveSystem extends RobotSystem {
         ex: speed *= PoewrLookup.lookup(speedMod);
         */
 
-        if(joystick.getRawButtonPressed(ValueMap.TOGGLE_ROTATION_DAMPENING))
+        if(Input.getRawButtonPressed(ValueMap.TOGGLE_ROTATION_DAMPENING))
             dampenRotation = !dampenRotation;
-        if(joystick.getRawButtonPressed(ValueMap.REVERSE_Y))
+        if(Input.getRawButtonPressed(ValueMap.REVERSE_Y))
             reversedFront = !reversedFront;
 
         //Calculate robot's speed and rotation based on joystick and mods.
-        double speed = joystick.getRawAxis(ValueMap.DRIVE_FRONT_BACK);
+        double speed = Input.getRawAxis(ValueMap.DRIVE_FRONT_BACK);
         double rotation;
         if(dampenRotation)
-            rotation = Dampen.lookup(Math.abs(joystick.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT))) 
-                * (joystick.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT) < 0 ? -1 : 1);
+            rotation = Dampen.lookup(Math.abs(Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT))) 
+                * (Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT) < 0 ? -1 : 1);
         else
-            rotation = joystick.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT);
+            rotation = Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT);
 
         //Print certain values to SmartDashboard for diagnostics.
         SmartDashboard.putNumber("speed", speed);

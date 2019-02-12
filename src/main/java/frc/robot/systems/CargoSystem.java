@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.util.Input;
 import frc.robot.util.ValueMap;
 
 public class CargoSystem extends RobotSystem{
@@ -13,21 +14,19 @@ public class CargoSystem extends RobotSystem{
 
     private VictorSPX leftShooter;
     private TalonSRX rightShooter;
-    private Joystick joystick;
 
     public void init(){
         leftShooter = new VictorSPX(ValueMap.CARGO_LEFT_SHOOTER);
         rightShooter = new TalonSRX(ValueMap.CARGO_RIGHT_SHOOTER);
-        joystick = new Joystick(ValueMap.JOYSTICK_PORT);
     }
 
     public void updateAutonomous(){}
 
     public void updateTeleop(){
-        if(joystick.getRawButton(ValueMap.CARGO_INTAKE_IN)){
+        if(Input.getRawButton(ValueMap.CARGO_INTAKE_IN)){
             leftShooter.set(ControlMode.PercentOutput, MAX_SPEED);
             rightShooter.set(ControlMode.PercentOutput, -MAX_SPEED);
-        }else if(joystick.getRawAxis(ValueMap.CARGO_INTAKE_OUT) > 0.15){
+        }else if(Input.getRawAxis(ValueMap.CARGO_INTAKE_OUT) > 0.15){
             leftShooter.set(ControlMode.PercentOutput, -MAX_SPEED);
             rightShooter.set(ControlMode.PercentOutput, MAX_SPEED);
         }else{
