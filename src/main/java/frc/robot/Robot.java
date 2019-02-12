@@ -14,6 +14,7 @@ import frc.robot.systems.CargoSystem;
 import frc.robot.systems.DriveSystem;
 import frc.robot.systems.HatchSystem;
 import frc.robot.systems.RobotSystem;
+import frc.robot.systems.VisionSystem;
 import frc.robot.util.ValueMap;
 
 /**
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
     RobotSystem.registerSystem("drive", new DriveSystem());
     RobotSystem.registerSystem("hatch", new HatchSystem());
     RobotSystem.registerSystem("cargo", new CargoSystem());
+    RobotSystem.registerSystem("vision", new VisionSystem());
 
     Compressor compressor = new Compressor(ValueMap.COMPRESSOR_PORT);
     compressor.start();
