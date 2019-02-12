@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.ValueMap;
+import frc.robot.util.math.Dampen;
 
 //This class handles the drivetrain of the robot.
 public class DriveSystem extends RobotSystem {
 
     //Driving constants.
-    private static final double ACCEL_INC = 0.005;
     private static final double DEAD_BAND = 0.15;
 
     //Variables relating to robot control.
@@ -19,14 +19,7 @@ public class DriveSystem extends RobotSystem {
     private VictorSP rearLeftMotor;
     private VictorSP rearRightMotor;
     private boolean reversedFront;
-
-    //Variables controlling the sensitivity of the joystick.
-    private double lastSpeed;
-    private double speedSensitivity;
-    private double rotationSensitivity;
-    private double acceleration = 0;
-    private boolean editingSpeed;
-    private int lastSensUpdate;
+    private boolean dampenRotation;
 
     public void init(){
         //Create joystick and motor objects with values obtained from ValueMap class.
@@ -38,32 +31,47 @@ public class DriveSystem extends RobotSystem {
 
         //Set all robot control variables to default value.
         reversedFront = false;
-        lastSpeed = 0;
-        speedSensitivity = rotationSensitivity = 1D;
-        editingSpeed = true;
+        dampenRotation = true;
     }
 
     public void updateAutonomous(){}
 
     public void updateTeleop(){
-        //Get joystick's POV value and use it to update sensitivity.
-        int joystickPOV = joystick.getPOV();
-        if(joystickPOV > -1 && lastSensUpdate++ >= 5)
-            updateSensitivity(joystickPOV);
-        //Invert the robot's y-axis if the correct joystick button has been pressed.
-        if(joystick.getRawButtonPressed(ValueMap.REVERSE_Y_BUTTON))
-            reversedFront = !reversedFront;
+        /*un-comment when elevator sensors are installed:
+        double speedMod = 1.0 - (currentElevatorHeight / maxElevatorHeight);
+        if(speedMod < someMinSpeed)
+            speed *= someMinSpeed;
+        else
+            speed *= speedMod;
 
-        //Calculate robot's speed and rotation based on joystick.
-        double speed = smoothAcceleration(joystick.getRawAxis(1) * speedSensitivity);
-        double rotation = joystick.getRawAxis(0) * rotationSensitivity;
+        maybe add a deadband for the bottom of the elevator
+        (if it's below some point just set mod to 1)
+        just so that there isn't any weirdness when the elevator
+        is near but not quite the bottom
+
+        also maybe feed mod into another exponential function
+        instead of just multiplying it directly
+        (for example if the damping is only really needed after the
+        elevator is like halfway up or something)
+        ex: speed *= PoewrLookup.lookup(speedMod);
+        */
+
+        if(joystick.getRawButtonPressed(3))
+            dampenRotation = !dampenRotation;
+
+        //Calculate robot's speed and rotation based on joystick and mods.
+        double speed = joystick.getRawAxis(1);
+        double rotation;
+        if(dampenRotation)
+            rotation = Dampen.lookup(Math.abs(joystick.getRawAxis(0))) * (joystick.getRawAxis(0) < 0 ? -1 : 1);
+        else
+            rotation = joystick.getRawAxis(0);
 
         //Print certain values to SmartDashboard for diagnostics.
         SmartDashboard.putNumber("speed", speed);
         SmartDashboard.putNumber("rotation", rotation);
-        SmartDashboard.putNumber("speedSens", speedSensitivity);
-        SmartDashboard.putNumber("rotSens", rotationSensitivity);
         SmartDashboard.putBoolean("reversedFront", reversedFront);
+        SmartDashboard.putBoolean("dampenRotation", dampenRotation);
 
         //Feed values into drive method.
         drive(speed, rotation);
@@ -93,74 +101,6 @@ public class DriveSystem extends RobotSystem {
         rearLeftMotor.set(leftSide);
         frontRightMotor.set(rightSide);
         rearRightMotor.set(rightSide);
-    }
-
-    //Update the speed and rotational sensitivity of the robot according to
-    //the value of the joystick POV.
-    private void updateSensitivity(int joystickPOV){
-        lastSensUpdate = 0;
-
-        //If the joystick's POV is straight up or down, raise and lower
-        //correct value accordingly.
-        if(joystickPOV == 0){
-            if(editingSpeed)
-                speedSensitivity *= 1.1;
-            else
-                rotationSensitivity *= 1.1;
-        }else if(joystickPOV == 180){
-            if(editingSpeed)
-                speedSensitivity *= 0.9;
-            else
-                rotationSensitivity *= 0.9;
-        }
-
-        //Limit sensitivity values to between 0.1 and 2.
-        //These values are arbitrary.
-        if(speedSensitivity < 0.1)
-            speedSensitivity = 0.1;
-        else if(speedSensitivity > 2)
-            speedSensitivity = 2;
-
-        if(rotationSensitivity < 0.1)
-            rotationSensitivity = 0.1;
-        else if(rotationSensitivity > 2)
-            rotationSensitivity = 2;
-
-        //If the joystick's POV is left or right, change the value that
-        //we're editing accordingly.
-        if(joystickPOV == 270)
-            editingSpeed = true;
-        else if(joystickPOV == 90)
-            editingSpeed = false;
-    }
-
-    //Smoothly increase speed.
-    private double smoothAcceleration(double targetSpeed){
-        double speed = lastSpeed;
-
-        if(speed == targetSpeed)
-            return lastSpeed;
-
-        if(speed < targetSpeed){
-            acceleration += ACCEL_INC;
-            speed += acceleration;
-
-            if(speed >= targetSpeed){
-                speed = targetSpeed;
-                acceleration = 0;
-            }
-        }else{
-            acceleration += ACCEL_INC;
-            speed -= acceleration;
-
-            if(speed <= targetSpeed){
-                speed = targetSpeed;
-                acceleration = 0;
-            }
-        }
-
-        lastSpeed = speed;
-        return speed;
     }
 
     //Ignores values that are within the specified deadband range of 0.
