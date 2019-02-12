@@ -9,7 +9,7 @@ import frc.robot.util.ValueMap;
 
 public class CargoSystem extends RobotSystem{
 
-    private static final double MAX_SPEED = 0.4;
+    private static final double MAX_SPEED = 0.5;
 
     private VictorSPX leftShooter;
     private TalonSRX rightShooter;
@@ -24,9 +24,12 @@ public class CargoSystem extends RobotSystem{
     public void updateAutonomous(){}
 
     public void updateTeleop(){
-        if(joystick.getRawButton(ValueMap.CARGO_INTAKE_OUT)){
+        if(joystick.getRawButton(ValueMap.CARGO_INTAKE_IN)){
             leftShooter.set(ControlMode.PercentOutput, MAX_SPEED);
             rightShooter.set(ControlMode.PercentOutput, -MAX_SPEED);
+        }else if(joystick.getRawAxis(ValueMap.CARGO_INTAKE_OUT) > 0.15){
+            leftShooter.set(ControlMode.PercentOutput, -MAX_SPEED);
+            rightShooter.set(ControlMode.PercentOutput, MAX_SPEED);
         }else{
             leftShooter.set(ControlMode.PercentOutput, 0);
             rightShooter.set(ControlMode.PercentOutput, 0);
