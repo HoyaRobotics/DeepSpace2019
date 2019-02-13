@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.systems.CargoSystem;
@@ -16,7 +15,6 @@ import frc.robot.systems.ElevatorSystem;
 import frc.robot.systems.HatchSystem;
 import frc.robot.systems.RobotSystem;
 import frc.robot.systems.VisionSystem;
-import frc.robot.util.ValueMap;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,10 +33,6 @@ public class Robot extends TimedRobot {
     RobotSystem.registerSystem("cargo", new CargoSystem());
     RobotSystem.registerSystem("elevator", new ElevatorSystem());
     RobotSystem.registerSystem("vision", new VisionSystem());
-
-    Compressor compressor = new Compressor(ValueMap.COMPRESSOR_PORT);
-    compressor.start();
-    compressor.setClosedLoopControl(true);
   }
 
   private long lastPeriodic = System.currentTimeMillis();
