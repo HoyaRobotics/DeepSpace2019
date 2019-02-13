@@ -20,7 +20,7 @@ public class CargoSystem extends RobotSystem{
     }
 
     public void update(){
-        if(Input.getRawButton(ValueMap.CARGO_INTAKE_IN)){
+        if(Input.getRawAxis(ValueMap.CARGO_INTAKE_IN) > 0.15){
             leftShooter.set(ControlMode.PercentOutput, MAX_SPEED);
             rightShooter.set(ControlMode.PercentOutput, -MAX_SPEED);
         }else if(Input.getRawAxis(ValueMap.CARGO_INTAKE_OUT) > 0.15){

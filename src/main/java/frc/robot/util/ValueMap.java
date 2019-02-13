@@ -12,16 +12,17 @@ public class ValueMap{
     public static final int TOGGLE_HATCH_MANIPULATOR = 2;  //B
     public static final int TOGGLE_ROTATION_DAMPENING = 3; //X
     public static final int REVERSE_Y = 4;                 //Y
-    public static final int CARGO_INTAKE_IN = 5;           //Left Bumper
     public static final int TOGGLE_HATCH_LIFTER = 6;       //Right Bumper
 
     //Joystick axis.
     public static final int DRIVE_LEFT_RIGHT = 0;          //Left Joystick X
     public static final int DRIVE_FRONT_BACK = 1;          //Left Joystick Y
     public static final int CARGO_INTAKE_OUT = 2;          //Left Trigger
+    public static final int CARGO_INTAKE_IN = 3;           //Right Trigger
 
     //Joystick POV.
     public static final int RAISE_ELEVATOR = 0;
+    public static final int LOWER_ELEVATOR = 180;
 
     //PWM ports.
     public static final int FRONT_LEFT_MOTOR_PORT = 3;
