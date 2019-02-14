@@ -143,7 +143,10 @@ public class ElevatorSystem extends RobotSystem{
     }
 
     public void output(){
-        SmartDashboard.putNumber("elevatorSpeed", speed);
+        SmartDashboard.putNumber("elevatorPercentCode", speed);
+        SmartDashboard.putNumber("elevatorPercentActual", elevator.getMotorOutputPercent());
+        SmartDashboard.putNumber("elevatorVoltage", elevator.getMotorOutputVoltage());
+        SmartDashboard.putNumber("elevatorCurrent", elevator.getOutputCurrent());
 
         /*
         SmartDashboard.putNumber("error", error);

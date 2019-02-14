@@ -23,8 +23,8 @@ public class HatchSystem extends RobotSystem{
     }
 
     public void output(){
-        SmartDashboard.putBoolean("hatchManipStatus", hatchManipulator.get());
-        SmartDashboard.putBoolean("hatchLifterStatus", hatchLifter.get());
+        SmartDashboard.putBoolean("hatchManipulatorOpen", !hatchManipulator.get());
+        SmartDashboard.putBoolean("hatchManipulatorDown", hatchLifter.get());
     }
 
     private void toggleManipulator(){
