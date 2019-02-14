@@ -39,14 +39,14 @@ public class Robot extends TimedRobot {
   //Runs periodically, in any mode.
   @Override
   public void robotPeriodic() {
-    long startLogic = System.currentTimeMillis();
+    long startOutput = System.currentTimeMillis();
 
     for(RobotSystem system : RobotSystem.allSystems())
-      system.update();
+      system.output();
 
-    SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
+    SmartDashboard.putNumber("timeForOutput", System.currentTimeMillis() - startOutput);
+
     SmartDashboard.putNumber("timeSinceLastPacket", System.currentTimeMillis() - lastPeriodic);
-
     lastPeriodic = System.currentTimeMillis();
   }
 
@@ -56,11 +56,25 @@ public class Robot extends TimedRobot {
 
   //Runs periodically during autonomous.
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    long startLogic = System.currentTimeMillis();
+
+    for(RobotSystem system : RobotSystem.allSystems())
+      system.update();
+
+    SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
+  }
 
   //Runs periodically during tele-op.
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    long startLogic = System.currentTimeMillis();
+
+    for(RobotSystem system : RobotSystem.allSystems())
+      system.update();
+
+    SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
+  }
 
   //Runs periodically during test.
   @Override

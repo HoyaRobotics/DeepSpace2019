@@ -16,8 +16,14 @@ public abstract class RobotSystem {
     //Should essentially replace constructor in child classes.
     //Put all initialization code here.
     public abstract void init();
-    //Called every robot packet.
+
+    //Called every robot packet during autonomous and tele-op.
+    //Should be used to update robot values.
     public abstract void update();
+
+    //Called every robot packet.
+    //Should be used for value output to the SmartDashboard or another output.
+    public abstract void output();
 
     //Adds a system to the global list.
     public static void registerSystem(String name, RobotSystem system){

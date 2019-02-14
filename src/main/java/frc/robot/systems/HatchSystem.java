@@ -20,7 +20,9 @@ public class HatchSystem extends RobotSystem{
             toggleManipulator();
         if(Input.getRawButtonPressed(ValueMap.TOGGLE_HATCH_LIFTER)) 
             toggleLift();
+    }
 
+    public void output(){
         SmartDashboard.putBoolean("hatchManipStatus", hatchManipulator.get());
         SmartDashboard.putBoolean("hatchLifterStatus", hatchLifter.get());
     }

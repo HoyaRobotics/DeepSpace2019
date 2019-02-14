@@ -89,8 +89,6 @@ public class ElevatorSystem extends RobotSystem{
         }
 
         elevator.set(ControlMode.PercentOutput, speed);
-        
-        SmartDashboard.putNumber("elevatorSpeed", speed);
 
         /*if(loopTime.get() == 0)
         {
@@ -102,7 +100,6 @@ public class ElevatorSystem extends RobotSystem{
         integral = integral + (error * timePerLoop);
         derivative = (error - priorError)/timePerLoop;
         velocity = (kp *error + ki * integral + kd *derivative + bias);
-        SmartDashboard.putNumber("error", error);
 
         if(joy.getRawButton(4))
         {
@@ -123,7 +120,6 @@ public class ElevatorSystem extends RobotSystem{
             velocity -= 0.01;
         else if(Input.getRawButtonPressed(ValueMap.ZERO_ENCODER))
             velocity = 0;
-        SmartDashboard.putNumber("elevatorSpeed", velocity);
 
         if(velocity > 1.0)
             velocity = 1.0;
@@ -140,16 +136,26 @@ public class ElevatorSystem extends RobotSystem{
             }
             elevator.set(ControlMode.PercentOutput, 0);
         }
+
+        previousPosition = elevator.getSelectedSensorPosition()/distPerRotation;
+        
+        priorError = error;*/
+    }
+
+    public void output(){
+        SmartDashboard.putNumber("elevatorSpeed", speed);
+
+        /*
+        SmartDashboard.putNumber("error", error);
+
+        SmartDashboard.putNumber("elevatorSpeed", velocity);
+        
         SmartDashboard.putNumber("elevator", elevator.getSelectedSensorPosition(0)/distPerRotation);
         SmartDashboard.putNumber("kp", kp);
         SmartDashboard.putNumber("ki", ki);
         SmartDashboard.putNumber("kd", kd);
         SmartDashboard.putNumber("desired height", desiredPosition);
-        SmartDashboard.putNumber("timeperloop", timePerLoop);
-
-        previousPosition = elevator.getSelectedSensorPosition()/distPerRotation;
-        
-        priorError = error;*/
+        SmartDashboard.putNumber("timeperloop", timePerLoop);*/
     }
 
     private void zeroEncoder(){

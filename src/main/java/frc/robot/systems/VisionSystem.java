@@ -9,5 +9,6 @@ public class VisionSystem extends RobotSystem {
     }
 
     public void update(){}
+    public void output(){}
 
 }

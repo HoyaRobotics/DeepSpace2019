@@ -34,4 +34,6 @@ public class CargoSystem extends RobotSystem{
             rightShooter.set(ControlMode.PercentOutput, 0);
         }
     }
+
+    public void output() {}
 }

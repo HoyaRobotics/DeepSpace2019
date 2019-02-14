@@ -19,6 +19,8 @@ public class DriveSystem extends RobotSystem {
     private VictorSP rearRightMotor;
     private boolean reversedFront;
     private boolean dampenRotation;
+    private double speed;
+    private double rotation;
 
     public void init(){
         //Create joystick and motor objects with values obtained from ValueMap class.
@@ -58,23 +60,24 @@ public class DriveSystem extends RobotSystem {
             reversedFront = !reversedFront;
 
         //Calculate robot's speed and rotation based on joystick and mods.
-        double speed = Input.getRawAxis(ValueMap.DRIVE_FRONT_BACK);
-        double rotation = Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT);
+        speed = Input.getRawAxis(ValueMap.DRIVE_FRONT_BACK);
+        rotation = Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT);
 
         speed = applyDeadband(speed);
         rotation = applyDeadband(rotation);
 
         if(dampenRotation)
             rotation = Dampen.lookup(Math.abs(rotation)) * (rotation < 0 ? -1 : 1);
+        
+        //Feed values into drive method.
+        drive(speed, rotation);
+    }
 
-        //Print certain values to SmartDashboard for diagnostics.
+    public void output(){
         SmartDashboard.putNumber("speed", speed);
         SmartDashboard.putNumber("rotation", rotation);
         SmartDashboard.putBoolean("reversedFront", reversedFront);
         SmartDashboard.putBoolean("dampenRotation", dampenRotation);
-
-        //Feed values into drive method.
-        drive(speed, rotation);
     }
 
     //Drives the robot with a certain speed and rotation.
