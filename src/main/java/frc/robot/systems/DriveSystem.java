@@ -59,12 +59,13 @@ public class DriveSystem extends RobotSystem {
 
         //Calculate robot's speed and rotation based on joystick and mods.
         double speed = Input.getRawAxis(ValueMap.DRIVE_FRONT_BACK);
-        double rotation;
+        double rotation = Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT);
+
+        speed = applyDeadband(speed);
+        rotation = applyDeadband(rotation);
+
         if(dampenRotation)
-            rotation = Dampen.lookup(Math.abs(Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT))) 
-                * (Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT) < 0 ? -1 : 1);
-        else
-            rotation = Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT);
+            rotation = Dampen.lookup(Math.abs(rotation)) * (rotation < 0 ? -1 : 1);
 
         //Print certain values to SmartDashboard for diagnostics.
         SmartDashboard.putNumber("speed", speed);
@@ -78,12 +79,6 @@ public class DriveSystem extends RobotSystem {
 
     //Drives the robot with a certain speed and rotation.
     public void drive(double speed, double rotation){
-        //Ignore values if they are too small. This is in place because
-        //the joystick is rarely at an even zero value, but instead slightly
-        //positive or negative.
-        speed = applyDeadband(speed);
-        rotation = applyDeadband(rotation);
-
         //Calculate values for left and right motors, and limit those values
         //to between -1.0 and 1.0.
         double leftSide = limit((speed * -1) + rotation);
