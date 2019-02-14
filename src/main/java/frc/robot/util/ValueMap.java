@@ -21,8 +21,10 @@ public class ValueMap{
     public static final int CARGO_INTAKE_IN = 3;           //Right Trigger
 
     //Joystick POV.
-    public static final int RAISE_ELEVATOR = 0;
-    public static final int LOWER_ELEVATOR = 180;
+    public static final int RAISE_ELEVATOR = 0;            //Up
+    public static final int LOWER_ELEVATOR = 180;          //Down
+    public static final int STOP_ELEVATOR_1 = 270;         //Left
+    public static final int STOP_ELEVATOR_2 = 90;          //Right
 
     //PWM ports.
     public static final int FRONT_LEFT_MOTOR_PORT = 3;
