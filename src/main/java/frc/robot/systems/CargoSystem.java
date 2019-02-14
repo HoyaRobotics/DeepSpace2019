@@ -11,12 +11,15 @@ public class CargoSystem extends RobotSystem{
 
     private static final double MAX_SPEED = 0.5;
 
+    private VictorSPX roller;
     private VictorSPX leftShooter;
     private TalonSRX rightShooter;
 
     public void init(){
+        roller = new VictorSPX(ValueMap.CARGO_INTAKE_ROLLER);
         leftShooter = new VictorSPX(ValueMap.CARGO_LEFT_SHOOTER);
         rightShooter = new TalonSRX(ValueMap.CARGO_RIGHT_SHOOTER);
+        roller.follow(rightShooter);
     }
 
     public void update(){

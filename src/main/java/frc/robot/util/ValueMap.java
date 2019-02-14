@@ -32,6 +32,7 @@ public class ValueMap{
     public static final int CARGO_INTAKE_RIGHT = 0;
 
     //CAN bus ids.
+    public static final int CARGO_INTAKE_ROLLER = 13;
     public static final int CARGO_LEFT_SHOOTER = 17;
     public static final int CARGO_RIGHT_SHOOTER = 16;
     public static final int ELEVATOR = 15;
