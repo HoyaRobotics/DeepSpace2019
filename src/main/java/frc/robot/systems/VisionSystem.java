@@ -8,7 +8,8 @@ public class VisionSystem extends RobotSystem {
         CameraServer.getInstance().startAutomaticCapture(0);
     }
 
-    public void update(){}
-    public void output(){}
+    public void disabledPeriodic(){}
+    public void enabledPeriodic(){}
+    public void alwaysPeriodic(){}
 
 }

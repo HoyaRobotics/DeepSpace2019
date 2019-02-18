@@ -28,32 +28,18 @@ public class DriveSystem extends RobotSystem {
         frontRightMotor = new VictorSP(ValueMap.FRONT_RIGHT_MOTOR_PORT);
         rearLeftMotor = new VictorSP(ValueMap.REAR_LEFT_MOTOR_PORT);
         rearRightMotor = new VictorSP(ValueMap.REAR_RIGHT_MOTOR_PORT);
+    }
 
-        //Set all robot control variables to default value.
+    public void disabledPeriodic(){
+        frontLeftMotor.set(0);
+        frontRightMotor.set(0);
+        rearLeftMotor.set(0);
+        rearRightMotor.set(0);
         reversedFront = false;
         dampenRotation = true;
     }
 
-    public void update(){
-        /*un-comment when elevator sensors are installed:
-        double speedMod = 1.0 - (currentElevatorHeight / maxElevatorHeight);
-        if(speedMod < someMinSpeed)
-            speed *= someMinSpeed;
-        else
-            speed *= speedMod;
-
-        maybe add a deadband for the bottom of the elevator
-        (if it's below some point just set mod to 1)
-        just so that there isn't any weirdness when the elevator
-        is near but not quite the bottom
-
-        also maybe feed mod into another exponential function
-        instead of just multiplying it directly
-        (for example if the damping is only really needed after the
-        elevator is like halfway up or something)
-        ex: speed *= PoewrLookup.lookup(speedMod);
-        */
-
+    public void enabledPeriodic(){
         if(Input.getRawButtonPressed(ValueMap.TOGGLE_ROTATION_DAMPENING))
             dampenRotation = !dampenRotation;
         if(Input.getRawButtonPressed(ValueMap.REVERSE_Y))
@@ -73,7 +59,7 @@ public class DriveSystem extends RobotSystem {
         drive(speed, rotation);
     }
 
-    public void output(){
+    public void alwaysPeriodic(){
         SmartDashboard.putNumber("speed", speed);
         SmartDashboard.putNumber("rotation", rotation);
         SmartDashboard.putBoolean("reversedFront", reversedFront);

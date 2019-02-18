@@ -15,14 +15,21 @@ public class HatchSystem extends RobotSystem{
         hatchLifter = new Solenoid(ValueMap.HATCH_LIFTER_PORT);
     }
 
-    public void update(){
+    public void disabledPeriodic(){
+        if(hatchManipulator.get())
+            toggleManipulator();
+        if(hatchLifter.get())
+            toggleLift();
+    }
+
+    public void enabledPeriodic(){
         if(Input.getRawButtonPressed(ValueMap.TOGGLE_HATCH_MANIPULATOR))
             toggleManipulator();
         if(Input.getRawButtonPressed(ValueMap.TOGGLE_HATCH_LIFTER)) 
             toggleLift();
     }
 
-    public void output(){
+    public void alwaysPeriodic(){
         SmartDashboard.putBoolean("hatchManipulatorOpen", !hatchManipulator.get());
         SmartDashboard.putBoolean("hatchManipulatorDown", hatchLifter.get());
     }

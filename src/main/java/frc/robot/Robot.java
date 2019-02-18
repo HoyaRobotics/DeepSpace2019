@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
     long startOutput = System.currentTimeMillis();
 
     for(RobotSystem system : RobotSystem.allSystems())
-      system.output();
+      system.alwaysPeriodic();
 
     SmartDashboard.putNumber("timeForOutput", System.currentTimeMillis() - startOutput);
 
@@ -50,9 +50,12 @@ public class Robot extends TimedRobot {
     lastPeriodic = System.currentTimeMillis();
   }
 
-  //Runs when autonomous is started.
+  //Runs periodically when robot is disabled.
   @Override
-  public void autonomousInit() {}
+  public void disabledPeriodic(){
+    for(RobotSystem system : RobotSystem.allSystems())
+      system.disabledPeriodic();
+  }
 
   //Runs periodically during autonomous.
   @Override
@@ -60,7 +63,7 @@ public class Robot extends TimedRobot {
     long startLogic = System.currentTimeMillis();
 
     for(RobotSystem system : RobotSystem.allSystems())
-      system.update();
+      system.enabledPeriodic();
 
     SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
   }
@@ -71,12 +74,8 @@ public class Robot extends TimedRobot {
     long startLogic = System.currentTimeMillis();
 
     for(RobotSystem system : RobotSystem.allSystems())
-      system.update();
+      system.enabledPeriodic();
 
     SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
   }
-
-  //Runs periodically during test.
-  @Override
-  public void testPeriodic() {}
 }

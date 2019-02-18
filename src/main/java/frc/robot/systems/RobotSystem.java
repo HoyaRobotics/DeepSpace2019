@@ -17,13 +17,17 @@ public abstract class RobotSystem {
     //Put all initialization code here.
     public abstract void init();
 
-    //Called every robot packet during autonomous and tele-op.
+    //Called every robot packet while enabled.
+    //Should be used to reset robot values.
+    public abstract void disabledPeriodic();
+
+    //Called every robot packet while enabled.
     //Should be used to update robot values.
-    public abstract void update();
+    public abstract void enabledPeriodic();
 
     //Called every robot packet.
     //Should be used for value output to the SmartDashboard or another output.
-    public abstract void output();
+    public abstract void alwaysPeriodic();
 
     //Adds a system to the global list.
     public static void registerSystem(String name, RobotSystem system){

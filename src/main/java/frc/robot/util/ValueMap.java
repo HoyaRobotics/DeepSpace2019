@@ -19,6 +19,7 @@ public class ValueMap{
     public static final int DRIVE_FRONT_BACK = 1;          //Left Joystick Y
     public static final int CARGO_INTAKE_OUT = 2;          //Left Trigger
     public static final int CARGO_INTAKE_IN = 3;           //Right Trigger
+    public static final int CARGO_INTAKE_SLIDE = 5;        //Right Joystick Y
 
     //Joystick POV.
     public static final int RAISE_ELEVATOR = 0;            //Up
@@ -31,13 +32,15 @@ public class ValueMap{
     public static final int FRONT_RIGHT_MOTOR_PORT = 4;
     public static final int REAR_LEFT_MOTOR_PORT = 2;
     public static final int REAR_RIGHT_MOTOR_PORT = 1;
-    public static final int CARGO_INTAKE_RIGHT = 0;
+    public static final int CARGO_INTAKE_ROLLER = 0;
 
     //CAN bus ids.
-    public static final int CARGO_INTAKE_ROLLER = 13;
+    //public static final int CARGO_INTAKE_RIGHT = 13;
     public static final int CARGO_LEFT_SHOOTER = 17;
     public static final int CARGO_RIGHT_SHOOTER = 16;
     public static final int ELEVATOR = 15;
+    public static final int CARGO_LEFT_SLIDE = 14;
+    public static final int CARGO_RIGHT_SLIDE = 13;
 
     //Pneumatics.
     public static final int COMPRESSOR_PORT = 0;
