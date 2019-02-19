@@ -64,6 +64,11 @@ public class ElevatorSystem extends RobotSystem{
             speed = BASE_HOVER_SPEED; //Start hovering at 25% motor capacity to quicken slow speed.
         }
 
+        if(speed > 1.0)
+            speed = 1.0;
+        else if(speed < -1.0)
+            speed = -1.0;
+
         elevator.set(ControlMode.PercentOutput, speed);
     }
 
