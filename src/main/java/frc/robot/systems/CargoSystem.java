@@ -63,6 +63,4 @@ public class CargoSystem extends RobotSystem{
             roller.set(0);
         }
     }
-
-    public void alwaysPeriodic() {}
 }

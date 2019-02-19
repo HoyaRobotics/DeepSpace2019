@@ -3,31 +3,29 @@ package frc.robot.systems;
 import java.util.Collection;
 import java.util.HashMap;
 
+//This class describes a system for use on the robot.
+//The class is abstract, but doesn't use abstract methods so
+//that they can be left unimplemented in child classes.
 public abstract class RobotSystem {
 
     //Global list of all robot systems.
     private static HashMap<String, RobotSystem> systems = new HashMap<>();
 
-    //Call init() in constructor.
-    public RobotSystem(){
-        init();
-    }
-
     //Should essentially replace constructor in child classes.
     //Put all initialization code here.
-    public abstract void init();
+    public void init(){}
 
     //Called every robot packet while enabled.
     //Should be used to reset robot values.
-    public abstract void disabledPeriodic();
+    public void disabledPeriodic(){}
 
     //Called every robot packet while enabled.
     //Should be used to update robot values.
-    public abstract void enabledPeriodic();
+    public void enabledPeriodic(){}
 
     //Called every robot packet.
     //Should be used for value output to the SmartDashboard or another output.
-    public abstract void alwaysPeriodic();
+    public void alwaysPeriodic(){}
 
     //Adds a system to the global list.
     public static void registerSystem(String name, RobotSystem system){
