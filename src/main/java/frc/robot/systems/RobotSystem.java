@@ -11,6 +11,10 @@ public abstract class RobotSystem {
     //Global list of all robot systems.
     private static HashMap<String, RobotSystem> systems = new HashMap<>();
 
+    public RobotSystem(){
+        init();
+    }
+
     //Should essentially replace constructor in child classes.
     //Put all initialization code here.
     public void init(){}
