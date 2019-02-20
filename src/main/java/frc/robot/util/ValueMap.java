@@ -4,9 +4,6 @@ package frc.robot.util;
 //etc into variable names.
 public class ValueMap{
 
-    //Joystick port.
-    public static final int JOYSTICK_PORT = 0;
-
     //Joystick buttons.
     public static final int ZERO_ENCODER = 1;              //A
     public static final int TOGGLE_HATCH_MANIPULATOR = 2;  //B

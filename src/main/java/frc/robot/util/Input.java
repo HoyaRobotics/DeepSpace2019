@@ -9,7 +9,11 @@ public class Input{
     private Joystick joystick;
 
     private Input(){
-        joystick = new Joystick(ValueMap.JOYSTICK_PORT);
+        for(int i = 0; i < 10; i++){
+            joystick = new Joystick(i);
+            if(joystick.getName().equals("Controller (Xbox One For Windows)"))
+                break;
+        }
     }
 
     public static boolean getRawButton(int id){
