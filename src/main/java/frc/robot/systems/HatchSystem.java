@@ -1,5 +1,6 @@
 package frc.robot.systems;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Input;
@@ -7,12 +8,13 @@ import frc.robot.util.ValueMap;
 
 public class HatchSystem extends RobotSystem{
 
+    private Compressor compressor = new Compressor(1);
     private Solenoid hatchManipulator, hatchLifter;
     private boolean open, lifted;
 
     public void init(){
-        hatchManipulator = new Solenoid(ValueMap.HATCH_MANIP_PORT);
-        hatchLifter = new Solenoid(ValueMap.HATCH_LIFTER_PORT);
+        hatchManipulator = new Solenoid(1, ValueMap.HATCH_MANIP_PORT);
+        hatchLifter = new Solenoid(1, ValueMap.HATCH_LIFTER_PORT);
     }
 
     public void disabledPeriodic(){

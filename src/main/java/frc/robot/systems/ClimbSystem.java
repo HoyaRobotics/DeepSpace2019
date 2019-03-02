@@ -11,8 +11,8 @@ public class ClimbSystem extends RobotSystem {
     private DoubleSolenoid rearLift;
 
     public void init(){
-        frontLift = new DoubleSolenoid(ValueMap.FRONT_LIFT_FORWARD, ValueMap.FRONT_LIFT_REVERSE);
-        rearLift = new DoubleSolenoid(ValueMap.REAR_LIFT_FORWARD, ValueMap.REAR_LIFT_REVERSE);
+        frontLift = new DoubleSolenoid(4, ValueMap.FRONT_LIFT_FORWARD, ValueMap.FRONT_LIFT_REVERSE);
+        rearLift = new DoubleSolenoid(4, ValueMap.REAR_LIFT_FORWARD, ValueMap.REAR_LIFT_REVERSE);
     }
 
     public void disabledPeriodic(){
