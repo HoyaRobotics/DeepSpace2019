@@ -10,6 +10,9 @@ public class ValueMap{
     public static final int TOGGLE_ROTATION_DAMPENING = 3; //X
     public static final int REVERSE_Y = 4;                 //Y
     public static final int TOGGLE_HATCH_LIFTER = 6;       //Right Bumper
+    public static final int DOWNWARDS = 5;                 //Left Bumper
+    public static final int FRONT_LIFT_CONTROL = 7;        //Select
+    public static final int REAR_LIFT_CONTROL = 8;         //Start
 
     //Joystick axis.
     public static final int DRIVE_LEFT_RIGHT = 0;          //Left Joystick X
@@ -43,4 +46,8 @@ public class ValueMap{
     public static final int COMPRESSOR_PORT = 0;
     public static final int HATCH_MANIP_PORT = 4;
     public static final int HATCH_LIFTER_PORT = 5;
+    public static final int FRONT_LIFT_FORWARD = 7;
+    public static final int FRONT_LIFT_REVERSE = 2;
+    public static final int REAR_LIFT_FORWARD = 3;
+    public static final int REAR_LIFT_REVERSE = 6;
 }

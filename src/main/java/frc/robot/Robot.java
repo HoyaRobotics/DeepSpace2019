@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.systems.CargoSystem;
+import frc.robot.systems.ClimbSystem;
 import frc.robot.systems.DriveSystem;
 import frc.robot.systems.ElevatorSystem;
 import frc.robot.systems.HatchSystem;
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
     RobotSystem.registerSystem("cargo", new CargoSystem());
     RobotSystem.registerSystem("elevator", new ElevatorSystem());
     RobotSystem.registerSystem("vision", new VisionSystem());
+    RobotSystem.registerSystem("climb", new ClimbSystem());
   }
 
   private long lastPeriodic = System.currentTimeMillis();
