@@ -5,7 +5,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 public class VisionSystem extends RobotSystem {
 
     public void init(){
-        CameraServer.getInstance().startAutomaticCapture(0);
+        CameraServer.getInstance().startAutomaticCapture();
     }
 
 }
