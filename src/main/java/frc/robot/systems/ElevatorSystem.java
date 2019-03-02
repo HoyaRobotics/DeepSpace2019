@@ -9,7 +9,7 @@ import frc.robot.util.ValueMap;
 
 public class ElevatorSystem extends RobotSystem{
 
-    private static final double BASE_HOVER_SPEED = 0.01;
+    private static final double BASE_HOVER_SPEED = 0.10;
     private static final double NUDGE_HOVER_SPEED = 0.001;
     private static final double NUDGE_RAISE_SPEED = 0.03;
     private static final double NUDGE_LOWER_SPEED = 0.03;
