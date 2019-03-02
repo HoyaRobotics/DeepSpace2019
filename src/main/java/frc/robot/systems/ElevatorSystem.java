@@ -1,8 +1,7 @@
 package frc.robot.systems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Input;
@@ -10,31 +9,27 @@ import frc.robot.util.ValueMap;
 
 public class ElevatorSystem extends RobotSystem{
 
-    private static final int TIMEOUT = 30;
-    private static final double BASE_HOVER_SPEED = 0.25;
-    private static final double NUDGE_HOVER_SPEED = 0.01;
+    private static final double BASE_HOVER_SPEED = 0.01;
+    private static final double NUDGE_HOVER_SPEED = 0.001;
     private static final double NUDGE_RAISE_SPEED = 0.03;
     private static final double NUDGE_LOWER_SPEED = 0.03;
 
-    private TalonSRX elevator;
+    private CANSparkMax elevator;
     private double speed;
     private double velocity;
     private boolean hover;
 
     public void init(){
-        elevator = new TalonSRX(ValueMap.ELEVATOR);
+        elevator = new CANSparkMax(ValueMap.ELEVATOR, MotorType.kBrushless);
         
-        elevator.configFactoryDefault();
         zeroEncoder();
-        elevator.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, TIMEOUT);
-        elevator.set(ControlMode.PercentOutput, 0);
     }
 
     public void disabledPeriodic(){
         speed = 0;
         velocity = 0;
         hover = false;
-        elevator.set(ControlMode.PercentOutput, 0);
+        elevator.set(0);
     }
 
     public void enabledPeriodic(){
@@ -48,8 +43,8 @@ public class ElevatorSystem extends RobotSystem{
             speed = 0;
             hover = false;
         }
-
-        velocity = elevator.getSensorCollection().getPulseWidthVelocity();
+        velocity = elevator.getEncoder().getVelocity();
+       SmartDashboard.putNumber("elevatorVelocity", velocity);
         if(hover){
             //Maintain height by monitoring velocity and adjusting motor speed accordingly.
             //(if we want to hover)
@@ -68,21 +63,17 @@ public class ElevatorSystem extends RobotSystem{
             speed = 1.0;
         else if(speed < -1.0)
             speed = -1.0;
-
-        elevator.set(ControlMode.PercentOutput, speed);
+        
+        elevator.set(speed);
     }
 
     public void alwaysPeriodic(){
-        SmartDashboard.putNumber("elevatorPercentCode", speed);
-        SmartDashboard.putNumber("elevatorPercentActual", elevator.getMotorOutputPercent());
-        SmartDashboard.putNumber("elevatorVoltage", elevator.getMotorOutputVoltage());
-        SmartDashboard.putNumber("elevatorCurrent", elevator.getOutputCurrent());
         SmartDashboard.putNumber("elevatorVelocity", velocity);
+        SmartDashboard.putNumber("elevator", elevator.getEncoder().getPosition());
     }
 
     private void zeroEncoder(){
-        elevator.set(ControlMode.PercentOutput, 0);
-        elevator.getSensorCollection().setPulseWidthPosition(0, TIMEOUT);
-        elevator.setSelectedSensorPosition(0, 0 ,0);
+        elevator.set(0);
+        elevator.getEncoder().setPosition(0);
     }
 }

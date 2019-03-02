@@ -35,7 +35,7 @@ public class ValueMap{
     //public static final int CARGO_INTAKE_RIGHT = 13;
     public static final int CARGO_LEFT_SHOOTER = 17;
     public static final int CARGO_RIGHT_SHOOTER = 16;
-    public static final int ELEVATOR = 15;
+    public static final int ELEVATOR = 27;
     public static final int CARGO_LEFT_SLIDE = 14;
     public static final int CARGO_RIGHT_SLIDE = 13;
 
