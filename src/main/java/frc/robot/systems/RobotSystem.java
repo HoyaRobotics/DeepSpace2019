@@ -1,7 +1,6 @@
 package frc.robot.systems;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 //This class describes a system for use on the robot.
 //The class is abstract, but doesn't use abstract methods so
@@ -9,9 +8,10 @@ import java.util.HashMap;
 public abstract class RobotSystem {
 
     //Global list of all robot systems.
-    private static HashMap<String, RobotSystem> systems = new HashMap<>();
+    private static ArrayList<RobotSystem> systems = new ArrayList<>();
 
     public RobotSystem(){
+        systems.add(this);
         init();
     }
 
@@ -31,19 +31,9 @@ public abstract class RobotSystem {
     //Should be used for value output to the SmartDashboard or another output.
     public void alwaysPeriodic(){}
 
-    //Adds a system to the global list.
-    public static void registerSystem(String name, RobotSystem system){
-        systems.put(name, system);
-    }
-
-    //Get a system by name from the global list.
-    public static RobotSystem getSystem(String name){
-        return systems.get(name);
-    }
-
     //Get all systems.
-    public static Collection<RobotSystem> allSystems(){
-        return systems.values();
+    public static ArrayList<RobotSystem> allSystems(){
+        return systems;
     }
 
 }

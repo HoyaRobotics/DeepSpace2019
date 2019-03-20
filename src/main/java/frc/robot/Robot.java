@@ -26,15 +26,22 @@ import frc.robot.systems.VisionSystem;
  */
 public class Robot extends TimedRobot {
 
+  public static DriveSystem driveSystem;
+  public static HatchSystem hatchSystem;
+  public static CargoSystem cargoSystem;
+  public static ElevatorSystem elevatorSystem;
+  public static VisionSystem visionSystem;
+  public static ClimbSystem climbSystem;
+
   //Runs when the robot is first started up.
   @Override
   public void robotInit() {
-    RobotSystem.registerSystem("drive", new DriveSystem());
-    RobotSystem.registerSystem("hatch", new HatchSystem());
-    RobotSystem.registerSystem("cargo", new CargoSystem());
-    RobotSystem.registerSystem("elevator", new ElevatorSystem());
-    RobotSystem.registerSystem("vision", new VisionSystem());
-    RobotSystem.registerSystem("climb", new ClimbSystem());
+    driveSystem = new DriveSystem();
+    hatchSystem = new HatchSystem();
+    cargoSystem = new CargoSystem();
+    elevatorSystem = new ElevatorSystem();
+    visionSystem = new VisionSystem();
+    climbSystem = new ClimbSystem();
   }
 
   private long lastPeriodic = System.currentTimeMillis();
