@@ -64,6 +64,35 @@ public class Robot extends TimedRobot {
     //Runs periodically when robot is disabled.
     @Override
     public void disabledPeriodic(){
+        timeInDisabled++;
+        if(timeInDisabled < 50)
+            return;
+
+        for(RobotSystem system : RobotSystem.allSystems())
+            system.disabledPeriodic();
+    }
+
+    //Runs periodically during autonomous.
+    @Override
+    public void autonomousPeriodic(){
+        timeInDisabled = 0;
+        long startLogic = System.currentTimeMillis();
+
+        for(RobotSystem system : RobotSystem.allSystems())
+            system.enabledPeriodic();
+
+        SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
+    }
+
+    //Runs periodically during tele-op.
+    @Override
+    public void teleopPeriodic(){
+        timeInDisabled = 100;
+        long startLogic = System.currentTimeMillis();
+
+        for(RobotSystem system : RobotSystem.allSystems())
+            system.enabledPeriodic();
         
+        SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
     }
 }
