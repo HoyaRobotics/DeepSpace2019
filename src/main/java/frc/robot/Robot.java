@@ -25,74 +25,45 @@ import frc.robot.systems.VisionSystem;
  * project.
  */
 public class Robot extends TimedRobot {
+    
+    public static DriveSystem driveSystem;
+    public static HatchSystem hatchSystem;
+    public static CargoSystem cargoSystem;
+    public static ElevatorSystem elevatorSystem;
+    public static VisionSystem visionSystem;
+    public static ClimbSystem climbSystem;
 
-  public static DriveSystem driveSystem;
-  public static HatchSystem hatchSystem;
-  public static CargoSystem cargoSystem;
-  public static ElevatorSystem elevatorSystem;
-  public static VisionSystem visionSystem;
-  public static ClimbSystem climbSystem;
+    private long lastPeriodic = System.currentTimeMillis();
+    private int timeInDisabled = 0;
 
-  private long lastPeriodic = System.currentTimeMillis();
-  private int timeInDisabled = 0;
+    //Runs when the robot is first started up.
+    @Override
+    public void robotInit(){
+        driveSystem = new DriveSystem();
+        hatchSystem = new HatchSystem();
+        cargoSystem = new CargoSystem();
+        elevatorSystem = new ElevatorSystem();
+        visionSystem = new VisionSystem();
+        climbSystem = new ClimbSystem();
+    }
 
-  //Runs when the robot is first started up.
-  @Override
-  public void robotInit() {
-    driveSystem = new DriveSystem();
-    hatchSystem = new HatchSystem();
-    cargoSystem = new CargoSystem();
-    elevatorSystem = new ElevatorSystem();
-    visionSystem = new VisionSystem();
-    climbSystem = new ClimbSystem();
-  }
+    //Runs periodically, in any mode.
+    @Override
+    public void robotPeriodic(){
+        long startOutput = System.currentTimeMillis();
 
-  //Runs periodically, in any mode.
-  @Override
-  public void robotPeriodic() {
-    long startOutput = System.currentTimeMillis();
+        for(RobotSystem system : RobotSystem.allSystems())
+            system.alwaysPeriodic();
 
-    for(RobotSystem system : RobotSystem.allSystems())
-      system.alwaysPeriodic();
+        SmartDashboard.putNumber("timeForOutput", System.currentTimeMillis() - startOutput);
 
-    SmartDashboard.putNumber("timeForOutput", System.currentTimeMillis() - startOutput);
+        SmartDashboard.putNumber("timeSinceLastPacket", System.currentTimeMillis() - lastPeriodic);
+        lastPeriodic = System.currentTimeMillis();
+    }
 
-    SmartDashboard.putNumber("timeSinceLastPacket", System.currentTimeMillis() - lastPeriodic);
-    lastPeriodic = System.currentTimeMillis();
-  }
-
-  //Runs periodically when robot is disabled.
-  @Override
-  public void disabledPeriodic(){
-    timeInDisabled++;
-    if(timeInDisabled < 50)
-      return;
-
-    for(RobotSystem system : RobotSystem.allSystems())
-      system.disabledPeriodic();
-  }
-
-  //Runs periodically during autonomous.
-  @Override
-  public void autonomousPeriodic() {
-    timeInDisabled = 0;
-    long startLogic = System.currentTimeMillis();
-
-    for(RobotSystem system : RobotSystem.allSystems())
-      system.enabledPeriodic();
-
-    SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
-  }
-
-  //Runs periodically during tele-op.
-  @Override
-  public void teleopPeriodic() {
-    timeInDisabled = 100;
-    long startLogic = System.currentTimeMillis();
-
-    for(RobotSystem system : RobotSystem.allSystems())
-      system.enabledPeriodic();
-
-    SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
-  }
+    //Runs periodically when robot is disabled.
+    @Override
+    public void disabledPeriodic(){
+        
+    }
 }
