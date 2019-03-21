@@ -33,6 +33,9 @@ public class Robot extends TimedRobot {
   public static VisionSystem visionSystem;
   public static ClimbSystem climbSystem;
 
+  private long lastPeriodic = System.currentTimeMillis();
+  private int timeInDisabled = 0;
+
   //Runs when the robot is first started up.
   @Override
   public void robotInit() {
@@ -44,7 +47,6 @@ public class Robot extends TimedRobot {
     climbSystem = new ClimbSystem();
   }
 
-  private long lastPeriodic = System.currentTimeMillis();
   //Runs periodically, in any mode.
   @Override
   public void robotPeriodic() {
@@ -62,6 +64,10 @@ public class Robot extends TimedRobot {
   //Runs periodically when robot is disabled.
   @Override
   public void disabledPeriodic(){
+    timeInDisabled++;
+    if(timeInDisabled < 50)
+      return;
+
     for(RobotSystem system : RobotSystem.allSystems())
       system.disabledPeriodic();
   }
@@ -69,6 +75,7 @@ public class Robot extends TimedRobot {
   //Runs periodically during autonomous.
   @Override
   public void autonomousPeriodic() {
+    timeInDisabled = 0;
     long startLogic = System.currentTimeMillis();
 
     for(RobotSystem system : RobotSystem.allSystems())
@@ -80,6 +87,7 @@ public class Robot extends TimedRobot {
   //Runs periodically during tele-op.
   @Override
   public void teleopPeriodic() {
+    timeInDisabled = 100;
     long startLogic = System.currentTimeMillis();
 
     for(RobotSystem system : RobotSystem.allSystems())
