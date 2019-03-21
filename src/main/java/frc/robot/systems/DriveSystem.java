@@ -17,8 +17,6 @@ public class DriveSystem extends RobotSystem {
     private VictorSP frontRightMotor;
     private VictorSP rearLeftMotor;
     private VictorSP rearRightMotor;
-    private boolean reversedFront;
-    private boolean dampenRotation;
     private double speed;
     private double rotation;
 
@@ -35,16 +33,9 @@ public class DriveSystem extends RobotSystem {
         frontRightMotor.set(0);
         rearLeftMotor.set(0);
         rearRightMotor.set(0);
-        reversedFront = false;
-        dampenRotation = true;
     }
 
     public void enabledPeriodic(){
-        if(Input.getRawButtonPressed(ValueMap.TOGGLE_ROTATION_DAMPENING))
-            dampenRotation = !dampenRotation;
-        if(Input.getRawButtonPressed(ValueMap.REVERSE_Y))
-            reversedFront = !reversedFront;
-
         //Calculate robot's speed and rotation based on joystick and mods.
         speed = Input.getRawAxis(ValueMap.DRIVE_FRONT_BACK);
         rotation = Input.getRawAxis(ValueMap.DRIVE_LEFT_RIGHT);
@@ -52,8 +43,7 @@ public class DriveSystem extends RobotSystem {
         speed = applyDeadband(speed);
         rotation = applyDeadband(rotation);
 
-        if(dampenRotation)
-            rotation = Dampen.lookup(Math.abs(rotation)) * (rotation < 0 ? -1 : 1);
+        rotation = Dampen.lookup(Math.abs(rotation)) * (rotation < 0 ? -1 : 1);
         
         //Feed values into drive method.
         drive(speed, rotation);
@@ -62,8 +52,6 @@ public class DriveSystem extends RobotSystem {
     public void alwaysPeriodic(){
         SmartDashboard.putNumber("speed", speed);
         SmartDashboard.putNumber("rotation", rotation);
-        SmartDashboard.putBoolean("reversedFront", reversedFront);
-        SmartDashboard.putBoolean("dampenRotation", dampenRotation);
     }
 
     //Drives the robot with a certain speed and rotation.
@@ -72,12 +60,6 @@ public class DriveSystem extends RobotSystem {
         //to between -1.0 and 1.0.
         double leftSide = limit((speed * -1) + rotation);
         double rightSide = limit(speed + rotation);
-
-        //Reverse each side if necessary by multiplying by -1.
-        if(reversedFront){
-            leftSide *= -1;
-            rightSide *= -1;
-        }
 
         //Set all motors to appropriate values.
         frontLeftMotor.set(leftSide);
