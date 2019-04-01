@@ -45,4 +45,8 @@ public class HatchSystem extends RobotSystem{
         lifted = !lifted;
         hatchLifter.set(lifted);
     }
+
+    public boolean isLifted(){
+        return lifted;
+    }
 }
