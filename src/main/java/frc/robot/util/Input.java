@@ -9,7 +9,7 @@ public class Input{
     private Joystick joystick;
 
     private Input(){
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 6; i++){
             joystick = new Joystick(i);
             if(joystick.getName().equals("Controller (Xbox One For Windows)"))
                 break;
