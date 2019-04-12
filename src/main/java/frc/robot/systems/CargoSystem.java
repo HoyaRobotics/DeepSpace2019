@@ -18,7 +18,8 @@ public class CargoSystem extends RobotSystem{
     private static final double ROLLER_IN_SPEED = 0.7;
     private static final double INTAKE_SPEED = 0.5;
     private static final double SHOOTER_SPEED = 1.0;
-    private static final double SLIDER_SPEED = 0.8;//was 0.65
+    private static final double SLIDE_IN_SPEED = 0.65;
+    private static final double SLIDE_OUT_SPEED = 0.8;
 
     // All motors used by the system:
     private VictorSP roller;
@@ -43,12 +44,12 @@ public class CargoSystem extends RobotSystem{
     public void enabledPeriodic(){
         if(Input.getRawAxis(ValueMap.CARGO_INTAKE_SLIDE) < -0.15){
             // Slide out.
-            leftSlide.set(ControlMode.PercentOutput, -SLIDER_SPEED);
-            rightSlide.set(ControlMode.PercentOutput, SLIDER_SPEED);
+            leftSlide.set(ControlMode.PercentOutput, -SLIDE_OUT_SPEED);
+            rightSlide.set(ControlMode.PercentOutput, SLIDE_OUT_SPEED);
         }else if(Input.getRawAxis(ValueMap.CARGO_INTAKE_SLIDE) > 0.15){
             // Slide in.
-            leftSlide.set(ControlMode.PercentOutput, SLIDER_SPEED);
-            rightSlide.set(ControlMode.PercentOutput, -SLIDER_SPEED);
+            leftSlide.set(ControlMode.PercentOutput, SLIDE_IN_SPEED);
+            rightSlide.set(ControlMode.PercentOutput, -SLIDE_IN_SPEED);
         }else{
             leftSlide.set(ControlMode.PercentOutput, 0);
             rightSlide.set(ControlMode.PercentOutput, 0);
