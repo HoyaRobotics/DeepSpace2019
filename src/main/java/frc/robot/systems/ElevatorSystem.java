@@ -129,6 +129,9 @@ public class ElevatorSystem extends RobotSystem{
                 }
             }
 
+            if(Input.getRawButton(ValueMap.GOTO_ELEVATOR_TOP))
+                targetIndex = (usingCargo ? CARGO_HEIGHTS.length : HATCH_HEIGHTS.length) - 1;
+
             moveToPosition(usingCargo ? CARGO_HEIGHTS[targetIndex] : HATCH_HEIGHTS[targetIndex]);
 
             if(Input.getRawButtonPressed(ValueMap.ZERO_ENCODER) || targetIndex == 0){

@@ -32,6 +32,7 @@ public class ValueMap{
     public static final int REVERSE_Y = Y;
     public static final int TOGGLE_HATCH_LIFTER = RIGHT_BUMPER;
     public static final int NEXT_CLIMB_STEP = LEFT_BUMPER;
+    public static final int GOTO_ELEVATOR_TOP = SELECT;
 
     // Joystick axis.
     public static final int DRIVE_LEFT_RIGHT = LEFT_JOYSTICK_X;
