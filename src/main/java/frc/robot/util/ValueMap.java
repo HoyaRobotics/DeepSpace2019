@@ -28,8 +28,7 @@ public class ValueMap{
     // Button mappings.
     public static final int ZERO_ENCODER = A;
     public static final int TOGGLE_HATCH_MANIPULATOR = B;
-    public static final int TOGGLE_ROTATION_DAMPENING = X;
-    public static final int REVERSE_Y = Y;
+    public static final int SLOWER_TURNING = Y;
     public static final int TOGGLE_HATCH_LIFTER = RIGHT_BUMPER;
     public static final int NEXT_CLIMB_STEP = LEFT_BUMPER;
     public static final int GOTO_ELEVATOR_TOP = SELECT;

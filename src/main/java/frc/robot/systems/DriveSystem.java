@@ -9,6 +9,9 @@ import frc.robot.util.math.Dampen;
 // This class handles the drive train of the robot.
 public class DriveSystem extends RobotSystem {
 
+    // How much we cut the rotation by when we're slow turning.
+    private static final double SLOW_TURNING_MODIFIER = 0.5;
+
     // Driving constants.
     private static final double DEAD_BAND = 0.15;
 
@@ -45,6 +48,8 @@ public class DriveSystem extends RobotSystem {
         rotation = applyDeadband(rotation);
 
         rotation = Dampen.lookup(Math.abs(rotation)) * (rotation < 0 ? -1 : 1);
+        if(Input.getRawButton(ValueMap.SLOWER_TURNING))
+            rotation *= SLOW_TURNING_MODIFIER;
         
         // Feed values into drive method.
         drive(speed, rotation);
