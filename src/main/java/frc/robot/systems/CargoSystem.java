@@ -8,14 +8,19 @@ import edu.wpi.first.wpilibj.VictorSP;
 import frc.robot.util.Input;
 import frc.robot.util.ValueMap;
 
+// This is the system that handles everything relating to
+// cargo manipulation. This inludes the roller and the
+// horizontal wheels.
 public class CargoSystem extends RobotSystem{
 
+    // Motor speeds (in percent):
     private static final double ROLLER_OUT_SPEED = 0.7;
     private static final double ROLLER_IN_SPEED = 0.7;
     private static final double INTAKE_SPEED = 0.5;
     private static final double SHOOTER_SPEED = 1.0;
-    private static final double SLIDER_SPEED = 0.65;
+    private static final double SLIDER_SPEED = 0.8;//was 0.65
 
+    // All motors used by the system:
     private VictorSP roller;
     private VictorSPX leftShooter;
     private TalonSRX rightShooter;
@@ -37,11 +42,11 @@ public class CargoSystem extends RobotSystem{
 
     public void enabledPeriodic(){
         if(Input.getRawAxis(ValueMap.CARGO_INTAKE_SLIDE) < -0.15){
-            //Slide out.
+            // Slide out.
             leftSlide.set(ControlMode.PercentOutput, -SLIDER_SPEED);
             rightSlide.set(ControlMode.PercentOutput, SLIDER_SPEED);
         }else if(Input.getRawAxis(ValueMap.CARGO_INTAKE_SLIDE) > 0.15){
-            //Slide in.
+            // Slide in.
             leftSlide.set(ControlMode.PercentOutput, SLIDER_SPEED);
             rightSlide.set(ControlMode.PercentOutput, -SLIDER_SPEED);
         }else{
@@ -50,10 +55,12 @@ public class CargoSystem extends RobotSystem{
         }
         
         if(Input.getRawAxis(ValueMap.CARGO_INTAKE_IN) > 0.15){
+            // Activate proper motors to intake cargo.
             leftShooter.set(ControlMode.PercentOutput, INTAKE_SPEED);
             rightShooter.set(ControlMode.PercentOutput, -INTAKE_SPEED);
             roller.set(-ROLLER_IN_SPEED);
         }else if(Input.getRawAxis(ValueMap.CARGO_INTAKE_OUT) > 0.15){
+            // Activate proper motors to shoot cargo.
             leftShooter.set(ControlMode.PercentOutput, -SHOOTER_SPEED);
             rightShooter.set(ControlMode.PercentOutput, SHOOTER_SPEED);
             roller.set(ROLLER_OUT_SPEED);
@@ -63,4 +70,6 @@ public class CargoSystem extends RobotSystem{
             roller.set(0);
         }
     }
+
+    public void alwaysPeriodic(){}
 }

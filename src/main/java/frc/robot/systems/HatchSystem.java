@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Input;
 import frc.robot.util.ValueMap;
 
+// This system handles the hatch manipulator. This includes
+// opening and closing the flower and raising and lowering
+// arm.
 public class HatchSystem extends RobotSystem{
 
     private Compressor compressor = new Compressor(1);

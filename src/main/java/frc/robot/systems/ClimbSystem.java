@@ -2,11 +2,12 @@ package frc.robot.systems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.util.Input;
 import frc.robot.util.ValueMap;
 
+// This is the system that handles climbing. This involves
+// the correct control of the four vertical pistons that
+// raise the robot onto level 2.
 public class ClimbSystem extends RobotSystem {
 
     private DoubleSolenoid frontLift;
@@ -54,4 +55,6 @@ public class ClimbSystem extends RobotSystem {
             }
         }
     }
+
+    public void alwaysPeriodic(){}
 }

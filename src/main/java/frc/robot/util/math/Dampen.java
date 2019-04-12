@@ -1,8 +1,8 @@
 package frc.robot.util.math;
 
-//This class stores values for x = 0.0-1.0 for the function y = 2^(8x - 8).
-//This removes the need to calculate these same values 50x per second,
-//which is a time costly operation.
+// This class stores values for x = 0.0-1.0 for the function y = 2^(8x - 8).
+// This removes the need to calculate these same values 50x per second,
+// which is a time costly operation.
 public class Dampen{
 
     private static final double[] values = new double[101];

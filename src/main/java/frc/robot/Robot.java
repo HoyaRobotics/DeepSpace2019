@@ -26,6 +26,7 @@ import frc.robot.systems.VisionSystem;
  */
 public class Robot extends TimedRobot {
     
+    // All sub-systems used by the robot.
     public static DriveSystem driveSystem;
     public static HatchSystem hatchSystem;
     public static CargoSystem cargoSystem;
@@ -33,10 +34,11 @@ public class Robot extends TimedRobot {
     public static VisionSystem visionSystem;
     public static ClimbSystem climbSystem;
 
+    // Variables used for packet time benchmarking.
     private long lastPeriodic = System.currentTimeMillis();
     private int timeInDisabled = 0;
 
-    //Runs when the robot is first started up.
+    // Runs when the robot is first started up.
     @Override
     public void robotInit(){
         driveSystem = new DriveSystem();
@@ -47,7 +49,7 @@ public class Robot extends TimedRobot {
         climbSystem = new ClimbSystem();
     }
 
-    //Runs periodically, in any mode.
+    // Runs periodically, in any mode.
     @Override
     public void robotPeriodic(){
         long startOutput = System.currentTimeMillis();
@@ -61,9 +63,14 @@ public class Robot extends TimedRobot {
         lastPeriodic = System.currentTimeMillis();
     }
 
-    //Runs periodically when robot is disabled.
+    // Runs periodically when robot is disabled.
     @Override
     public void disabledPeriodic(){
+        // Only run disabled code if we've been disabled for
+        // more than 0.5 seconds.
+        // This prevents the robot's manipulators from resetting
+        // during the transition from sandstorm to teleop mode,
+        // when it briefly enters disabled mode.
         timeInDisabled++;
         if(timeInDisabled < 50)
             return;
@@ -72,7 +79,7 @@ public class Robot extends TimedRobot {
             system.disabledPeriodic();
     }
 
-    //Runs periodically during autonomous.
+    // Runs periodically during autonomous.
     @Override
     public void autonomousPeriodic(){
         timeInDisabled = 0;
@@ -84,7 +91,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("timeForLogic", System.currentTimeMillis() - startLogic);
     }
 
-    //Runs periodically during tele-op.
+    // Runs periodically during tele-op.
     @Override
     public void teleopPeriodic(){
         timeInDisabled = 100;

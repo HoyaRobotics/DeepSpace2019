@@ -8,6 +8,10 @@ import frc.robot.Robot;
 import frc.robot.util.Input;
 import frc.robot.util.ValueMap;
 
+// This system handles the the raising and lowering of the
+// hatch/cargo manipulator.
+// We use PID control to make the elevator snap to the
+// correct position automagically.
 public class ElevatorSystem extends RobotSystem{
 
     // Heights for hatches and cargo, represented as encoder units.
