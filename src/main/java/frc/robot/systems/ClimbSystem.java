@@ -32,7 +32,7 @@ public class ClimbSystem extends RobotSystem {
             frontLift.set(Value.kOff);
         }
 
-        if(Input.getRawButtonPressed(ValueMap.DOWNWARDS)){
+        if(Input.getRawButtonPressed(ValueMap.NEXT_CLIMB_STEP)){
             if(stepCounter >= 3){
                 stepCounter++;
                 stepCounter = 0;
