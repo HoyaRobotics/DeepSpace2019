@@ -138,7 +138,6 @@ public class ElevatorSystem extends RobotSystem{
                 i = 0;
                 falling = true;
                 elevatorMotorSpeed = 0;
-                System.out.println("falling");
             }
         }
 
